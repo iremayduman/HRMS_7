@@ -5,5 +5,4 @@ import org.springframework.stereotype.Service;
 @Service
 public interface EmailSendService {
 	public void emailSend(String email);
-
 }

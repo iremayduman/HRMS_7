@@ -4,10 +4,11 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
 
-import kodlama.io.javaCamp6.core.abstracts.CheckEmailService;
+
+import kodlama.io.javaCamp6.core.abstracts.CheckMailService;
 
 @Component
-public class CheckMailManager implements CheckEmailService {
+public class CheckMailManager implements CheckMailService {
 
 	private static final String EMAIL_PATTERN = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+.(com|org|net|edu|gov|mil|biz|info|mobi)(.[A-Z]{2})?$";
 	

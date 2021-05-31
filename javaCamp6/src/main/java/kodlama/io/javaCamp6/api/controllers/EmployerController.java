@@ -29,6 +29,7 @@ public class EmployerController {
 	public DataResult<List<Employer>> getAll(){
 		return this.employerService.getAll();
 	}
+	
 	@PostMapping("/register")
 	public Result add(@RequestBody Employer employer) {
 		return this.employerService.register(employer);

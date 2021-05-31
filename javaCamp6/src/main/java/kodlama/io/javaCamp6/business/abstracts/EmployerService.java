@@ -13,5 +13,5 @@ public interface EmployerService {
 	public Result register(Employer employer);
 
 	DataResult<List<Employer>> getAll();
-	public List<String> getAllEmails();
+	 List<String> getAllEmails();
 }

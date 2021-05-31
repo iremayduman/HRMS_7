@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import kodlama.io.javaCamp6.business.abstracts.JobseekerService;
+import kodlama.io.javaCamp6.core.utilities.results.DataResult;
 import kodlama.io.javaCamp6.core.utilities.results.Result;
 
 import kodlama.io.javaCamp6.entities.concretes.Jobseeker;
 
 @RestController
-@RequestMapping("/api/jobSeekers")
+@RequestMapping("/api/jobseekers")
 public class JobseekerController {
 	private JobseekerService jobseekerService;
 
@@ -26,14 +27,13 @@ public class JobseekerController {
     }
 
     @GetMapping("/getall")
-	public List<Jobseeker> getAll(){
+	public DataResult<List<Jobseeker>> getAll(){
 		return this.jobseekerService.getAll();
     }
   
-    
 
-    @PostMapping("/register")
-	public Result add(@RequestBody Jobseeker jobSeeker) {
-		return this.jobseekerService.register(jobSeeker);
+    @PostMapping("/add")
+	public Result add(@RequestBody Jobseeker jobseeker) {
+		return this.jobseekerService.register(jobseeker);
     }
 }

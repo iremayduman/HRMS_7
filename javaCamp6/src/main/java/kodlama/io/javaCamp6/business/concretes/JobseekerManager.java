@@ -1,7 +1,7 @@
 package kodlama.io.javaCamp6.business.concretes;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 
 
 import kodlama.io.javaCamp6.business.abstracts.JobseekerService;
-import kodlama.io.javaCamp6.core.abstracts.CheckEmailService;
+
+import kodlama.io.javaCamp6.core.abstracts.CheckMailService;
 import kodlama.io.javaCamp6.core.abstracts.EmailSendService;
 import kodlama.io.javaCamp6.core.abstracts.MernisCheckService;
-
+import kodlama.io.javaCamp6.core.utilities.results.DataResult;
 import kodlama.io.javaCamp6.core.utilities.results.ErrorResult;
 import kodlama.io.javaCamp6.core.utilities.results.Result;
-
+import kodlama.io.javaCamp6.core.utilities.results.SuccessDataResult;
 import kodlama.io.javaCamp6.core.utilities.results.SuccessResult;
 
 import kodlama.io.javaCamp6.dataAccess.abstracts.JobseekerDao;
@@ -27,19 +28,18 @@ import kodlama.io.javaCamp6.entities.concretes.Jobseeker;
 public class JobseekerManager implements JobseekerService {
 
 	private JobseekerDao jobseekerDao;
-	private CheckEmailService emailCheckService;
+	private CheckMailService mailCheckService;
 	private MernisCheckService mernisCheckService;
 	private EmailSendService emailSendService;
-	private List<String> emails = new ArrayList<>();
-	private List<String> identificationNumbers = new ArrayList<>();
+	
 @Autowired
-	public JobseekerManager(JobseekerDao jobseekerDao, CheckEmailService emailCheckService,
-			MernisCheckService mernisCheckService, EmailSendService emailSendService) {
+	public JobseekerManager(JobseekerDao jobseekerDao, CheckMailService mailCheckService,
+			MernisCheckService mernisCheckService) {
 		super();
 		this.jobseekerDao = jobseekerDao;
-		this.emailCheckService = emailCheckService;
+		this.mailCheckService = mailCheckService;
 		this.mernisCheckService = mernisCheckService;
-		this.emailSendService = emailSendService;
+	
 	}
 
 	
@@ -58,8 +58,7 @@ public class JobseekerManager implements JobseekerService {
 	@Override
 	public Result register(Jobseeker jobseeker) {
 		Result result = new ErrorResult("Giriş başarısız!!!");
-		if (emailCheckService.mailCheck(jobseeker.getEmail()) && emailIsItUsed(jobseeker.getEmail())
-				&& tcNoIsItUsed(jobseeker.getTcNo()) && mernisCheckService.checkIfRealPerson(jobseeker)) {
+		if (mailCheckService.mailCheck(jobseeker.getEmail())  && mernisCheckService.checkIfRealPerson(jobseeker)) {
 			emailSendService.emailSend(jobseeker.getEmail());
 			this.jobseekerDao.save(jobseeker);
 			result = new SuccessResult("Login successful !");
@@ -67,42 +66,26 @@ public class JobseekerManager implements JobseekerService {
 		return result;
 	}
 
-	public boolean emailIsItUsed(String email) {
-		boolean result = true;
-		if (getAllEmails().contains(email)) {
-			result = false;
-		}
-		return result;
-	}
 
-	public boolean tcNoIsItUsed(String TcNo) {
-		boolean result = true;
-		if (getAllTcNo().contains(TcNo)) {
-			result = false;
-		}
-		return result;
 
-	}
 
 	@Override
-	public List<String> getAllEmails() {
-		for (int i = 0; i < getAll().size(); i++) {
-			emails.add(getAll().get(i).getEmail());
-		}
-		return emails;
+	public DataResult<List<Jobseeker>> getAll() {
+		
+		return new SuccessDataResult<List<Jobseeker>>(this.jobseekerDao.findAll());
 	}
 
-	@Override
-	public List<String> getAllTcNo() {
-		for (int i = 0; i < getAll().size(); i++) {
-			identificationNumbers.add(getAll().get(i).getTcNo());
-		}
-		return identificationNumbers;
-	}
 
 	@Override
-	public List<Jobseeker> getAll() {
-		return this.jobseekerDao.findAll();
+	public DataResult<List<Jobseeker>> getAllEmails(String email) {
+		return new  SuccessDataResult<List<Jobseeker>>(this.jobseekerDao.findByEmail(email));
+	}
+
+
+	@Override
+	public DataResult<List<Jobseeker>> getAllTcNo(String TcNo) {
+		// TODO Auto-generated method stub
+		return new SuccessDataResult<List<Jobseeker>>(this.jobseekerDao.findByTcNo(TcNo));
 	}
 	
 	

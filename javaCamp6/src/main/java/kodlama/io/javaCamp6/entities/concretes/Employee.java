@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "employees")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name="employee_id",referencedColumnName ="id" )
 @EqualsAndHashCode(callSuper=false)
 @AllArgsConstructor
 @NoArgsConstructor

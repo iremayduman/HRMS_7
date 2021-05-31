@@ -8,5 +8,5 @@ import kodlama.io.javaCamp6.entities.concretes.Employee;
 
 public interface EmployeeService {
 	DataResult<List<Employee>> getAll();
-	public Result register(Employee employee);
+	 Result register(Employee employee);
 }

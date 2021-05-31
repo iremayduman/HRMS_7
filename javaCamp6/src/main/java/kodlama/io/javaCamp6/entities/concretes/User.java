@@ -12,19 +12,19 @@ import javax.persistence.InheritanceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@Data
 @Entity
 @Table(name = "users")
-@Data
+
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public abstract class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id" )
-	private int id;
+    @Column(name="id")
+	private int Userid;
 	
 	@Column(name="email")
 	private String email;

@@ -2,19 +2,21 @@ package kodlama.io.javaCamp6.core.concretes;
 
 import org.springframework.stereotype.Service;
 
-import kodlama.io.javaCamp6.core.abstracts.EmailSendService;
-import kodlama.io.javaCamp6.mailService.MailSendManager;
+import kodlama.io.javaCamp6.MailSendService.MailSendManager;
 
+import kodlama.io.javaCamp6.core.abstracts.EmailSendService;
 @Service
-public class EmailSendManagerAdapter implements EmailSendService {
+public class MailManager implements EmailSendService {
 
 	private MailSendManager mailSendManager;
 
 
-	public EmailSendManagerAdapter(MailSendManager mailSendManager) {
+
+	public MailManager(MailSendManager mailSendManager) {
 		super();
 		this.mailSendManager = mailSendManager;
 	}
+
 
 
 	@Override
@@ -22,5 +24,4 @@ public class EmailSendManagerAdapter implements EmailSendService {
 		mailSendManager.verificationSend(email);
 
 	}
-
 }

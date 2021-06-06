@@ -1,8 +1,5 @@
 package kodlama.io.javaCamp6.entities.concretes;
 
-
-
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,29 +15,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
+@Table(name="cities")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobAds"})
-@Table(name="job_titles")
-
-
-public class JobTitle {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
-
-	
-	@Column(name="title")
-	private String jobTitle;
-	
-	@OneToMany(mappedBy = "jobTitle")
-	private List<JobAd> jobAds;
-	
-
-	
-	
+public class City {
+	 @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+		@Column(name="id")
+		private int id;
+	 
+	 @Column(name="city_name")
+		private String cityName;
+		
+		@OneToMany(mappedBy = "city")
+		private List<JobAd> jobAds;
 }
